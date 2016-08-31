@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--让IE兼容Bootstrap，让IE运行在最新的渲染模式下-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>室内空气质量检测系统</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/main1.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/highstock.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/PageEventHandle.js"></script>
+    <script src="js/getStationInfo.js"></script>
+    <script src="js/themes/grid-light.js"></script>
+</head>
+<body>
+<div class="page-header navbar-fixed-top">
+    <img style="margin:10px 5px 0 15px" src="assets/logo.png">
+    <div style="display: inline-table;">
+        <h4>城市空气质量内部检测系统</h4>
+        <h6 >实时，细粒度，图形化
+            <span class="pull-right">
+            <a href="main.html">中文</a>
+            |
+            <a href="English.html">English</a>
+        </span>
+        </h6>
+    </div>
+
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div id="container">
+        <ul class="nav navbar-nav">
+            <li style="margin-left: 10px" class="active">
+                <a data-toggle="tab" href="#StationInfoPane">
+                    <span class="glyphicon glyphicon-list"></span>
+                    AQI列表
+                </a>
+            </li>
+            <li style="margin-left: 10px">
+                <a data-toggle="tab" href="#AQI_24Hours">
+                    <span class="glyphicon glyphicon-signal"></span>
+                    24时AQI
+                </a>
+            </li>
+            <li style="margin-left: 10px">
+                <a data-toggle="tab" href="#StationStatistic">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                    状态统计
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="tab-content">
+    <div id="StationInfoPane" class="tab-pane fade in active">
+        &nbsp;
+        <div id="statusLabel">
+            <span>AQI状态:</span>
+            <span>
+                    <label >
+                        <b>全部</b>
+                        <span id="All" class="badge">&nbsp;</span>
+                    </label>
+                    <label style="margin-left: 10px">
+                        <b>未工作</b>
+                        <span id="Unworking" class="badge">&nbsp;</span>
+                    </label>
+                    <label style="margin-left: 10px">
+                        <b>正常</b>
+                        <span id="Working" class="badge">&nbsp;</span>
+                    </label>
+            </span>
+        </div>
+        &nbsp;
+        <div>
+            <div class="panel-body">
+                <span style="margin-left: 20px">内部站点: </span>
+                <div class="dropdown" style="display: inline">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="listBtn01">
+                        &nbsp;
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="stationList01" style="margin-top:12px;">
+                    </ul>
+                </div>
+            </div>
+            <table id="stationInfoTable" class="table table-bordered table-responsive">
+                <tr>
+                    <th style="width: 110px;">站点号</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>主机名</th>
+                    <td></td>
+                </tr>
+                <th>地址</th>
+                <td></td>
+                <tr>
+                    <th>负责人</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>数据收集时间</th>
+                    <td></td>
+                </tr>
+            </table>
+            <table id="tableAQI" class="table table-bordered table-responsive">
+                <tr>
+                    <th>实时AQI</th>
+                    <th>PM2.5</th>
+                    <th>PM10</th>
+                    <th>等级</th>
+                </tr>
+                <tr>
+                    <th>室内</th>
+                    <td class="indoorColor"></td>
+                    <td class="indoorColor"></td>
+                    <td class="indoorColor"></td>
+                </tr>
+                <tr>
+                    <th>室外</th>
+                    <td class="outdoorColor"></td>
+                    <td class="outdoorColor"></td>
+                    <td class="outdoorColor"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="AQI_24Hours" class="tab-pane fade">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>站点选择</b>
+            </div>
+            <div>
+                <div class="panel-body" style="margin-left: 15px">
+                    <span style="margin-left: 20px"><b>内部站点: </b></span>
+                    <div class="dropdown" style="display: inline">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="listBtn02">
+                            &nbsp;
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" id="stationList02" style="margin-top:12px;">
+                        </ul>
+                    </div>
+                    <div style="margin: 10px 20px"><b>外部来源: </b>
+                        国家环境保护部 -
+                        <span id="outDataFrom"></span>
+                    </div>
+                    <div style="margin-left: 20px"><b>更新时间:</b>
+                        <span id="updateTime"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>24小时趋势</b>
+            </div>
+            <div class="panel-body">
+                <div id="picPM25" class="chart1"></div>
+                <div id="picPM10" class="chart1"></div>
+            </div>
+        </div>
+    </div>
+    <div id="StationStatistic" class="tab-pane fade">
+        <div id="statusPie" class="chart2"></div>
+    </div>
+</div>
+</body>
+</html>
